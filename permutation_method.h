@@ -1,0 +1,16 @@
+#pragma once
+
+#include <algorithm>
+
+#include "general.h"
+
+
+
+//////////////////////////////////////////////////////////////////////
+std::vector<int>& initialize(const int& count);
+
+//////////////////////////////////////////////////////////////////////
+std::vector<std::vector<int>>& producePermutations(const int& count);
+
+//////////////////////////////////////////////////////////////////////
+double calculateShortestDistance(const std::vector<Port>& ports, const std::vector<std::vector<int>> routes);

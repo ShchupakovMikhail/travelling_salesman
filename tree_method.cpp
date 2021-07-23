@@ -45,3 +45,32 @@ void calculate(const Node* node, const Port& prevPort, const Port& startingPort
 		calculate(nextNode, node->port, startingPort, curDist, minDist);
 	}
 }
+
+//////////////////////////////////////////////////////////////////////
+void efficientCalcTree(Node* parent, std::vector<Port>& ports, const Port& startingPort
+	, double curDist, double& minDist)
+{
+	if (ports.size() == 0)
+	{
+		curDist += distance(parent->port, startingPort);
+		minDist = std::min(minDist, curDist);
+		return;
+	}
+
+	for (size_t i = 0; i < ports.size(); i++)
+	{
+		std::vector<Port> tmp = ports;
+		Node* child = new Node;
+		child->port = tmp[i];
+		tmp.erase(std::remove_if(tmp.begin(), tmp.end(), [&child](const auto& port)
+			{
+				return child->port == port;
+			}
+		));
+
+		const double newCurDist = curDist + distance(parent->port, child->port);
+		parent->nodes.push_back(child);
+
+		efficientCalcTree(child, tmp, startingPort, newCurDist, minDist);
+	}
+}
